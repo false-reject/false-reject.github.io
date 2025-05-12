@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning">
+  <meta property="og:title" content="FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning"/>
+  <meta property="og:description" content="A comprehensive resource containing 16k seemingly toxic queries accompanied by structured responses across 44 safety-related categories."/>
+  <meta property="og:url" content="false-reject.github.io"/>
+  <meta property="og:image" content="static/images/Figure_benchmark.png" />
+  <meta property="og:image:width" content="1200"/>
+  <meta property="og:image:height" content="630"/>
+
+  <meta name="twitter:title" content="FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning">
+  <meta name="twitter:description" content="A comprehensive resource containing 16k seemingly toxic queries accompanied by structured responses across 44 safety-related categories.">
+  <meta name="twitter:image" content="static/images/Figure_benchmark.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="keywords" content="LLM safety, Over-refusal, False rejection, AI alignment, Language models, Safety calibration">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>FalseReject</title>
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="static/js/bulma-carousel.min.js"></script>
+  <script src="static/js/bulma-slider.min.js"></script>
+  <script src="static/js/index.js"></script>
+
+  <style>
+    * {
+      font-family: 'Google Sans', sans-serif !important;
+    }
+    
+    @media screen and (max-width: 768px) {
+      .publication-title {
+        font-size: 1.8rem !important;
+      }
+      .publication-authors {
+        font-size: 0.9rem !important;
+      }
+      .author-block {
+        display: inline-block;
+        margin-bottom: 0.5rem;
+      }
+      .link-block {
+        display: inline-block;
+        margin: 0.25rem;
+      }
+      .subtitle {
+        font-size: 0.9rem !important;
+      }
+      .content p {
+        font-size: 0.9rem;
+      }
+      img {
+        width: 100% !important;
+      }
+      .container {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container" style="max-width: 1200px;">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://zzh-sjtu.github.io/zhehaozhang.github.io/">Zhehao Zhang</a><sup>1†</sup>,</span>
+                <span class="author-block">
+                  <a href="https://weijiexu.com/">Weijie Xu</a><sup>2</sup>,</span>
+                  <span class="author-block">
+                    <a href="https://wufanyou.github.io/">Fanyou Wu</a><sup>2</sup>,</span>
+                    <span class="author-block">
+                      <a href="https://creddy.net/">Chandan K. Reddy</a><sup>2</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>Dartmouth College, <sup>2</sup>Amazon<br>
+                <sup>†</sup>Work done at Amazon
+              </span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2502.04313" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                    <img src="static/images/arxiv-logomark-small.svg" style="width: 1em; height: 1em;">
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <span class="link-block">
+                <a href="https://huggingface.co/datasets/AmazonScience/FalseReject" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon">
+                  <img src="static/images/huggingface_logo-noborder.svg" width="24px" height="24px">
+                </span>
+                <span>Dataset</span>
+              </a>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="hero teaser">
+  <div class="container" style="max-width: 1200px;">
+    <div class="hero-body">
+      <div style="text-align: center;">
+        <img src="static/images/example_refusal_updated.png" alt="Example of refusal behavior" style="max-width: 82%; width: 100%;">
+      </div>
+      <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto;">
+        Examples include a non-reasoning LLM that directly refuses a benign prompt and a reasoning model that fully complies without considering safety. In contrast, models fine-tuned with our FalseReject dataset can effectively distinguish between safe and unsafe contexts and provide helpful information while maintaining safety.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container" style="max-width: 1000px;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Safety alignment approaches in large language models (LLMs) often lead to the over-refusal of benign queries, significantly diminishing their utility in sensitive scenarios. To address this challenge, we introduce FalseReject, a comprehensive resource containing 16k seemingly toxic queries accompanied by structured responses across 44 safety-related categories. We propose a graph-informed adversarial multi-agent interaction framework to generate diverse and complex prompts, while structuring responses with explicit reasoning to aid models in accurately distinguishing safe from unsafe contexts. FalseReject includes training datasets tailored for both standard instruction-tuned models and reasoning-oriented models, as well as a human-annotated benchmark test set. Our extensive benchmarking on 29 state-of-the-art (SOTA) LLMs reveals persistent over-refusal challenges. Empirical results demonstrate that supervised finetuning with FalseReject substantially reduces unnecessary refusals without compromising overall safety or general language capabilities.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section hero is-light">
+  <div class="container" style="max-width: 1000px;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column">
+        <h2 class="title is-3">Comparison with Existing Datasets</h2>
+        <div class="content">
+          <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable" style="margin: 0 auto; font-size: 0.9rem; width: 100%;">
+              <thead>
+                <tr>
+                  <th style="min-width: 120px;">Dataset</th>
+                  <th style="min-width: 90px;">Size</th>
+                  <th style="min-width: 90px;">Topics</th>
+                  <th style="min-width: 90px;">Train</th>
+                  <th style="min-width: 90px;">LLM-<br>Gen</th>
+                  <th style="min-width: 90px;">Rejection<br>Rate</th>
+                  <th style="min-width: 90px;">Self-<br>BLUE ↓</th>
+                  <th style="min-width: 90px;">Dist-2<br>↑</th>
+                  <th style="min-width: 90px;">CoT</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://aclanthology.org/2024.naacl-long.301/">XSTest</a></td>
+                  <td>250</td>
+                  <td>18</td>
+                  <td>❌</td>
+                  <td>❌</td>
+                  <td>12.10</td>
+                  <td><b>0.21</b></td>
+                  <td><b>0.69</b></td>
+                  <td>❌</td>
+                </tr>
+                <tr>
+                  <td><a href="https://aclanthology.org/2024.acl-long.253/">OKTest</a></td>
+                  <td>350</td>
+                  <td>18</td>
+                  <td>❌</td>
+                  <td>❌</td>
+                  <td>19.75</td>
+                  <td>0.31</td>
+                  <td>0.64</td>
+                  <td>❌</td>
+                </tr>
+                <tr>
+                  <td><a href="https://arxiv.org/abs/2409.00598">PHTest</a></td>
+                  <td>3,260</td>
+                  <td>10</td>
+                  <td>❌</td>
+                  <td>✅</td>
+                  <td>14.00</td>
+                  <td>0.40</td>
+                  <td>0.52</td>
+                  <td>❌</td>
+                </tr>
+                <tr>
+                  <td><a href="https://arxiv.org/abs/2405.20947">OR-Bench</a></td>
+                  <td>80K</td>
+                  <td>10</td>
+                  <td>❌</td>
+                  <td>✅</td>
+                  <td>6.20</td>
+                  <td>0.35</td>
+                  <td>0.53</td>
+                  <td>❌</td>
+                </tr>
+                <tr style="border: 2px solid black;">
+                  <td><b>FalseReject</b> (Ours)</td>
+                  <td>16K</td>
+                  <td>44</td>
+                  <td>✅</td>
+                  <td>✅</td>
+                  <td><b>40.46</b></td>
+                  <td><b>0.26</b></td>
+                  <td><b>0.65</b></td>
+                  <td>✅</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="has-text-justified" style="margin-top: 2rem; max-width: 1000px; margin-left: auto; margin-right: auto;">
+            Comparison of FalseReject with existing over-refusal datasets. We bold the best scores for both LLM-generated and human-written ones. Topics indicate the number of sensitive topic categories covered. Train specifies whether the dataset contains a query-response training set. LLM-Gen indicates whether datasets are created by LLMs or humans. Rejection Rate denotes the average rejection rate across a fixed set of LLMs. Self-BLEU and Dist-2 (distinct-2gram) measure diversity. CoT indicates whether the dataset includes long chain-of-thought reasoning in responses.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="hero-body">
+    <div class="container" style="max-width: 1000px;">
+      <h1 class="title is-3 has-text-centered">Key Findings</h1>
+      <div class="content has-text-justified">
+        <div class="item" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="title is-4 has-text-centered">
+            <b>Data Generation Pipeline</b>
+          </h1>
+            <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
+            To generate diverse and challenging over-refusal queries at scale, we propose a graph-informed adversarial multi-agent interaction framework. Our approach begins by extracting entity graphs from existing safety-related datasets, which serve as the foundation for generating queries. Through iterative adversarial interactions between a Generator and Discriminator, guided by validation feedback from a pool of LLM evaluators, we create prompts that appear unsafe but remain genuinely harmless. This structured iterative refinement ensures the production of high-quality synthetic queries that effectively simulate unsafe requests without actual harm.
+          </p>
+          <img src="static/images/diagram_data.png" alt="Data generation pipeline" style="width: 100%; max-width: 90%; object-fit: contain; margin: 0 auto 20px auto;"/>
+          <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
+            The overall pipeline for generating over-refusal queries in our FalseReject dataset. Our novel graph-informed adversarial multi-agent interaction framework effectively generates diverse and challenging over-refusal queries at scale.
+          </h2>
+        </div>
+
+        <div class="item" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="title is-4 has-text-centered">
+            <b>Benchmarking Results</b>
+          </h1>
+          <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
+            Our comprehensive evaluation of 29 SOTA LLMs reveals that even advanced models still struggle significantly with over-refusal. Most models show compliance rates and USR scores far from perfect, with widely-used models like GPT-4.5 and Claude-3.5-Sonnet having compliance rates below 50%. Interestingly, we found that reasoning-oriented models show inconsistent behavior - while DeepSeek-R1 achieves the highest compliance rate (87.53%) and nearly perfect USR (99.66%), other reasoning models like QwQ and o1 exhibit substantially lower compliance rates.
+          </p>
+          <img src="static/images/Figure_benchmark.png" alt="Benchmarking results" style="width: 100%; max-width: 90%; object-fit: contain; margin: 0 auto 20px auto;"/>
+          <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
+            Benchmarking results on the FalseReject-Test dataset, comparing Compliance Rate and USR metrics across various language models. Closed-source models are indicated with dark green labels, while open-source models are shown in black. Reasoning-specific models (o1, Deepseek-R1, and QwQ) are additionally marked with a star.
+          </h2>
+        </div>
+
+        <div class="item" style="text-align: center;">
+          <h1 class="title is-4 has-text-centered">
+            <b>In-depth Analysis</b>
+          </h1>
+          <div style="display: flex; justify-content: center; gap: 10px;">
+            <img src="static/images/llama_figure.png" alt="Llama analysis" style="width: 30%; object-fit: contain;"/>
+            <img src="static/images/qwen_figure.png" alt="Qwen analysis" style="width: 30%; object-fit: contain;"/>
+            <img src="static/images/gemma_figure.png" alt="Gemma analysis" style="width: 30%; object-fit: contain;"/>
+          </div>
+          <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
+            Per-token KL divergence between aligned models and their base counterparts on the FalseReject dataset. Comparisons are shown for LLM families, contrasting models fine-tuned with our FalseReject-Train-Instruct dataset against the corresponding official instruction-tuned versions.
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width: 1200px;">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-11">
+        <h2 class="subtitle has-text-justified">
+          <i>Our work underscores the importance of reporting and correcting for model similarity, especially in the emerging paradigm of AI oversight.</i>
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="BibTeX">
+  <div class="container content" style="max-width: 1200px;">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@misc{zhang2025falsereject,
+  title={FalseReject: A Resource for Improving Contextual Safety and Mitigating Over-Refusals in LLMs via Structured Reasoning},
+  author={Zhehao Zhang and Weijie Xu and Fanyou Wu and Chandan K. Reddy},
+  year={2025},
+  eprint={2502.04313},
+  archivePrefix={arXiv}
+}</code></pre>
+  </div>
+</section>
+
+<footer class="footer py-2">
+  <div class="container">
+    <div class="columns">
+      <div class="column is-8">
+        <div class="content is-small has-text-right">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
