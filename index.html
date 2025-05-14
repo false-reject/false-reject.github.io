@@ -244,13 +244,12 @@
 <section class="hero is-small">
   <div class="hero-body">
     <div class="container" style="max-width: 1000px;">
-      <h1 class="title is-3 has-text-centered">Key Findings</h1>
       <div class="content has-text-justified">
         <div class="item" style="text-align: center; margin-bottom: 4rem;">
           <h1 class="title is-4 has-text-centered">
-            <b>Data Generation Pipeline</b>
+            <b>Over-Refusal Query Generation Pipeline</b>
           </h1>
-            <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
+          <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
             To generate diverse and challenging over-refusal queries at scale, we propose a graph-informed adversarial multi-agent interaction framework. Our approach begins by extracting entity graphs from existing safety-related datasets, which serve as the foundation for generating queries. Through iterative adversarial interactions between a Generator and Discriminator, guided by validation feedback from a pool of LLM evaluators, we create prompts that appear unsafe but remain genuinely harmless. This structured iterative refinement ensures the production of high-quality synthetic queries that effectively simulate unsafe requests without actual harm.
           </p>
           <img src="static/images/diagram_data.png" alt="Data generation pipeline" style="width: 100%; max-width: 90%; object-fit: contain; margin: 0 auto 20px auto;"/>
@@ -258,6 +257,37 @@
             The overall pipeline for generating over-refusal queries in our FalseReject dataset. Our novel graph-informed adversarial multi-agent interaction framework effectively generates diverse and challenging over-refusal queries at scale.
           </h2>
         </div>
+
+        <div class="item" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="title is-4 has-text-centered">
+            <b>Response Generation: Addressing Ambiguity</b>
+          </h1>
+          <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
+            One significant reason behind over-refusal is ambiguity. Many queries have multiple possible interpretations, with some being safe and others potentially unsafe. Prior work identified that such ambiguous inputs can cause LLMs to refuse responses, categorizing these cases as controversial.
+          </p>
+          <p class="has-text-justified" style="max-width: 1000px; margin: 2rem auto;">
+            <b>Solution: Context-aware Safety Response</b><br>
+            Responses should be context-aware, following the user's instructions in safe contexts while carefully avoiding the generation of unsafe content. Our approach includes:
+          </p>
+          <ul style="text-align: left; max-width: 900px; margin: 1rem auto;">
+            <li><b>Acknowledgment and Differentiation of Multiple Contexts:</b> Explicitly recognize different interpretations of the query</li>
+            <li><b>Detailed Explanation of the Safe Context:</b> Provide clear reasoning for safe interpretations</li>
+            <li><b>Clarification and Guidance on Potentially Unsafe Contexts:</b> Explain why certain interpretations could be problematic</li>
+            <li><b>Closing Statement:</b> Summarize the appropriate response based on context analysis</li>
+          </ul>
+        </div>
+
+        <div class="item" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="title is-4 has-text-centered">
+            <b>Example Data Point</b>
+          </h1>
+          <img src="static/images/instruction_tunning_updated.png" alt="Example of instruction tuning" style="width: 100%; max-width: 90%; object-fit: contain; margin: 2rem auto;" loading="lazy"/>
+          <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
+            An example from our dataset showing how we structure responses to handle ambiguous queries. The response demonstrates our context-aware approach by carefully analyzing different interpretations and providing appropriate guidance.
+          </h2>
+        </div>
+
+        <h1 class="title is-3 has-text-centered">Key Findings</h1>
 
         <div class="item" style="text-align: center; margin-bottom: 4rem;">
           <h1 class="title is-4 has-text-centered">
@@ -270,6 +300,35 @@
           <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
             Benchmarking results on the FalseReject-Test dataset, comparing Compliance Rate and USR metrics across various language models. Closed-source models are indicated with dark green labels, while open-source models are shown in black. Reasoning-specific models (o1, Deepseek-R1, and QwQ) are additionally marked with a star.
           </h2>
+          <div class="content has-text-left" style="max-width: 900px; margin: 2rem auto;">
+            <p><b>Findings:</b></p>
+            <ol>
+              <li><b>Persistent Over-Refusal in SOTA Models:</b> Even the most advanced language models continue to exhibit significant over-refusal behavior.</li>
+              <li><b>Inconsistent Behavior in Reasoning Models:</b> While some reasoning-oriented models like DeepSeek-R1 show excellent performance, others demonstrate notably lower compliance rates.</li>
+              <li><b>Distinct Refusal Patterns Across Model Families:</b> Different model families show unique patterns in how they handle potentially sensitive queries.</li>
+              <li><b>Model Size ≠ Better Refusal Behavior:</b> Larger models don't necessarily demonstrate better judgment in handling sensitive queries.</li>
+              <li><b>General Language Ability ≠ Less Over-Refusal:</b> Superior general language capabilities don't automatically translate to better handling of sensitive content.</li>
+              <li><b>Open-Source Models Show Strong Results:</b> Several open-source models demonstrate competitive performance in managing over-refusal scenarios.</li>
+            </ol>
+          </div>
+        </div>
+
+        <div class="item" style="text-align: center; margin-bottom: 4rem;">
+          <h1 class="title is-4 has-text-centered">
+            <b>Training with FalseReject</b>
+          </h1>
+          <img src="static/images/result_training.png" alt="Training results" style="width: 100%; max-width: 90%; object-fit: contain; margin: 2rem auto;" loading="lazy"/>
+          <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
+            Training with FalseReject effectively mitigates over-refusal in non-reasoning models and improves safety in reasoning models.
+          </h2>
+          <div class="content has-text-left" style="max-width: 900px; margin: 2rem auto;">
+            <p><b>Findings:</b></p>
+            <ol>
+              <li><b>SFT with FalseReject-Train-Instruct:</b> Effectively mitigates over-refusal in non-reasoning LLMs.</li>
+              <li><b>SFT with FalseReject-Train-CoT:</b> Substantially improves safety in reasoning LLMs.</li>
+              <li><b>General Language Ability:</b> Incorporating FalseReject does not influence general language ability.</li>
+            </ol>
+          </div>
         </div>
 
         <div class="item" style="text-align: center;">
@@ -284,6 +343,9 @@
           <h2 class="subtitle has-text-justified" style="max-width: 1000px; margin: 0 auto; font-size: 0.85rem;">
             Per-token KL divergence between aligned models and their base counterparts on the FalseReject dataset. Comparisons are shown for LLM families, contrasting models fine-tuned with our FalseReject-Train-Instruct dataset against the corresponding official instruction-tuned versions.
           </h2>
+          <div class="content has-text-left" style="max-width: 900px; margin: 2rem auto;">
+            <p><b>Finding:</b> SFT with FalseReject-Train achieves deeper and more sustained alignment compared to standard instruction-tuned models in over-refusal scenarios.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -294,9 +356,17 @@
   <div class="container" style="max-width: 1200px;">
     <div class="columns is-centered has-text-centered">
       <div class="column is-11">
-        <h2 class="subtitle has-text-justified">
-          <i>Our work underscores the importance of reporting and correcting for model similarity, especially in the emerging paradigm of AI oversight.</i>
-        </h2>
+        <h2 class="title is-4">Takeaways</h2>
+        <div class="content has-text-justified">
+          <p><b>Over-refusal remains widespread despite improvements</b><br>
+          Even the most capable LLMs (e.g., GPT-4.5, Claude-3.5) frequently reject benign queries due to perceived safety concerns.</p>
+          
+          <p><b>Context-aware Synthetic data fine-tuning effectively reduces over-refusal</b><br>
+          Supervised fine-tuning with context-aware synthetic data significantly reduces unnecessary refusals while maintaining strong safety alignment in both reasoning and non-reasoning LLMs. It effectively trains models to reason about controversial queries by distinguishing safe from unsafe contexts, promotes deeper alignment, and can serve as a valuable component in post-training pipelines.</p>
+          
+          <p><b>Adversarial multi-agent interaction enhances synthetic data quality</b><br>
+          An iterative adversarial multi-agent approach consistently and incrementally improves the quality of generated data, effectively challenging current LLM capabilities.</p>
+        </div>
       </div>
     </div>
   </div>
